@@ -1,0 +1,13 @@
+App_Data/
+
+bin/
+obj/
+
+packages/
+!repositories.config
+
+*.suo
+*.user
+
+
+
