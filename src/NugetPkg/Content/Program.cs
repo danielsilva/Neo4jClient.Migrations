@@ -11,12 +11,13 @@ namespace Migrations
         {
             // Instantiate your graph client
             var myGraphDatabase = new GraphClient(new Uri("http://path/to/neo4j/data"));
+            myGraphDatabase.Connect();
 
             // run this code migrate to the latest version
             new Migrator(myGraphDatabase).Migrate(Assembly.GetExecutingAssembly());
 
             // ...to migrate to a specific version (up or down) pass 'toVersion' parameter
-            // new Migrator(myGraphDatabase).Migrate(Assembly.GetExecutingAssembly(), toVersion: 1);
+            new Migrator(myGraphDatabase).Migrate(Assembly.GetExecutingAssembly(), toVersion: 1);
         }
     }
 }
