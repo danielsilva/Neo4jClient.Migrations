@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Neo4jClient.Migrations")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A migrations library for Neo4jClient")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Modulo Solutions for GRC")]
+[assembly: AssemblyCompany("Daniel Silva")]
 [assembly: AssemblyProduct("Neo4jClient.Migrations")]
-[assembly: AssemblyCopyright("Copyright © Modulo Solutions for GRC 2014")]
+[assembly: AssemblyCopyright("Copyright © 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

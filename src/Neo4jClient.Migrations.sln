@@ -5,6 +5,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neo4jClient.Migrations", "N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neo4jClient.Migrations.Tests", "Neo4jClient.Migrations.Tests\Neo4jClient.Migrations.Tests.csproj", "{5265C0AD-F852-4615-8676-D723BA450393}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NugetPkg", "NugetPkg", "{18BB8E60-2990-4C6D-805C-082FEAD283B0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Versions", "Versions", "{755E5E4A-2D37-495D-A7D2-0905932290E4}"
+	ProjectSection(SolutionItems) = preProject
+		NugetPkg\Content\Versions\1_BootstrapDatabase.cs = NugetPkg\Content\Versions\1_BootstrapDatabase.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{FCD66D58-762E-488D-B32C-602030530D71}"
+	ProjectSection(SolutionItems) = preProject
+		NugetPkg\Content\Program.cs = NugetPkg\Content\Program.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,5 +34,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FCD66D58-762E-488D-B32C-602030530D71} = {18BB8E60-2990-4C6D-805C-082FEAD283B0}
+		{755E5E4A-2D37-495D-A7D2-0905932290E4} = {FCD66D58-762E-488D-B32C-602030530D71}
 	EndGlobalSection
 EndGlobal

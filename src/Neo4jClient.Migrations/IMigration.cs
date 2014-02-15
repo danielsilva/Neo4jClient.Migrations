@@ -8,7 +8,7 @@ namespace Neo4jClient.Migrations
 {
     public interface IMigration
     {
-        void Up(IGraphClient session);
-        void Down(IGraphClient session);
+        void Up(IGraphClient graphClient);
+        void Down(IGraphClient graphClient);
     }
 }
