@@ -15,10 +15,10 @@ namespace Neo4jClient.Migrations.Tests.MigratorTests
 
         public Migrate_Down_From_2()
         {
-            sut = new Migrator();
-            sut.Migrate(graphClient, Assembly.GetExecutingAssembly());
+            sut = new Migrator(graphClient);
+            sut.Migrate(Assembly.GetExecutingAssembly());
 
-            sut.Migrate(graphClient, Assembly.GetExecutingAssembly(), 1);
+            sut.Migrate(Assembly.GetExecutingAssembly(), 1);
         }
 
         [Fact]

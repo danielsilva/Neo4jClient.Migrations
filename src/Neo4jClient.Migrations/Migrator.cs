@@ -9,27 +9,32 @@ namespace Neo4jClient.Migrations
 {
     public class Migrator
     {
-        public void Migrate(IGraphClient graphClient, Assembly assemblyWithMigrations, long toVersion = -1)
+        private readonly IGraphClient graphClient;
+
+        public Migrator(IGraphClient graphClient)
+        {
+            this.graphClient = graphClient;
+        }
+
+        public void Migrate(Assembly assemblyWithMigrations, long toVersion = -1)
         {
             bool toMax = toVersion < 0;
             var migrations = GetMigrations(assemblyWithMigrations);
+            EnsureCanMigrate(toVersion, migrations, assemblyWithMigrations);
 
-            if (toMax)
-                toVersion = long.MaxValue;
-            else
-                EnsureCanMigrate(toVersion, migrations, assemblyWithMigrations);
+            if (toMax) toVersion = long.MaxValue;
 
-            var appliedMigrations = GetAppliedMigrations(graphClient);
+            var appliedMigrations = GetAppliedMigrations();
             var appliedVersions = new HashSet<long>(appliedMigrations.Select(m => m.Version));
             var currentVersion = appliedVersions.Count == 0 ? 0 : appliedVersions.Max();
 
             if (toVersion > currentVersion)
             {
-                MigrateUpTo(toVersion, appliedVersions, migrations, graphClient);
+                MigrateUpTo(toVersion, appliedVersions, migrations);
             }
             else
             {
-                MigrateDownTo(toVersion, appliedMigrations, appliedVersions, migrations, graphClient);
+                MigrateDownTo(toVersion, appliedMigrations, appliedVersions, migrations);
             }
         }
 
@@ -59,12 +64,12 @@ namespace Neo4jClient.Migrations
                 throw new ArgumentException(string.Format("Migration {0} not defined. Omit the toVersion parameter to migrate to the latest version (actually: {1}).", toVersion, migrations.Max(t => t.Key)));
         }
 
-        private IEnumerable<MigrationInfo> GetAppliedMigrations(IGraphClient graphClient)
+        private IEnumerable<MigrationInfo> GetAppliedMigrations()
         {
             return graphClient.Cypher.Match("(m:MigrationInfo)").Return(m => m.As<MigrationInfo>()).Results;
         }
 
-        private void MigrateUpTo(long toVersion, ISet<long> appliedVersions, IDictionary<long, Type> migrations, IGraphClient graphClient)
+        private void MigrateUpTo(long toVersion, ISet<long> appliedVersions, IDictionary<long, Type> migrations)
         {
             var migrationsToRun = migrations
                 .Where(m => !appliedVersions.Contains(m.Key) && m.Key <= toVersion)
@@ -84,7 +89,7 @@ namespace Neo4jClient.Migrations
             }
         }
 
-        private void MigrateDownTo(long toVersion, IEnumerable<MigrationInfo> appliedMigrations, ISet<long> appliedVersions, IDictionary<long, Type> migrations, IGraphClient graphClient)
+        private void MigrateDownTo(long toVersion, IEnumerable<MigrationInfo> appliedMigrations, ISet<long> appliedVersions, IDictionary<long, Type> migrations)
         {
             var migrationsToRun = appliedMigrations
                 .Where(m => appliedVersions.Contains(m.Version) && m.Version > toVersion)

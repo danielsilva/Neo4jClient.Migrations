@@ -15,8 +15,8 @@ namespace Neo4jClient.Migrations.Tests.MigratorTests
 
         public Migrate_Up_To_1()
         {
-            sut = new Migrator();
-            sut.Migrate(graphClient, Assembly.GetExecutingAssembly(), 1);
+            sut = new Migrator(graphClient);
+            sut.Migrate(Assembly.GetExecutingAssembly(), 1);
         }
 
         [Fact]

@@ -7,26 +7,19 @@ using System.Threading.Tasks;
 
 namespace Neo4jClient.Migrations.Tests
 {
-    class FakeAssembly : Assembly
+    public class FakeAssembly : Assembly
     {
-        public FakeAssembly(params Type[] types)
+        public FakeAssembly()
         {
-            Types = types;
+            Types = new Type[]{};
         }
 
+        public override string FullName { get { return "FakeAssembly"; } }
         public Type[] Types { get; set; }
 
         public override Type[] GetExportedTypes()
         {
             return Types;
-        }
-
-        public override string FullName
-        {
-            get
-            {
-                return "FakeAssembly";
-            }
         }
     }
 }

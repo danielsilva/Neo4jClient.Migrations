@@ -16,8 +16,8 @@ namespace Neo4jClient.Migrations.Tests.MigratorTests
 
         public Migrate_Up_To_Max()
         {
-            sut = new Migrator();
-            sut.Migrate(graphClient, Assembly.GetExecutingAssembly());
+            sut = new Migrator(graphClient);
+            sut.Migrate(Assembly.GetExecutingAssembly());
             results = graphClient.Cypher.Match("(m:Movie)").Return(m => m.As<Movie>()).Results.ToList();
         }
 

@@ -59,6 +59,7 @@
     <Compile Include="BaseTests.cs" />
     <Compile Include="FakeAssembly.cs" />
     <Compile Include="MigratorTests\Migrate_Down_From_2.cs" />
+    <Compile Include="MigratorTests\Migrate_Exceptions.cs" />
     <Compile Include="MigratorTests\Migrate_Up_To_Max.cs" />
     <Compile Include="MigratorTests\Migrate_Up_To_1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
