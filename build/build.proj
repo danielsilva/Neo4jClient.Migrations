@@ -1,0 +1,48 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets	="Rebuild">
+	
+	<PropertyGroup>
+		<BaseDir>$(MSBuildProjectDirectory)\..</BaseDir>
+		<BuildDir>$(BaseDir)\.build</BuildDir>
+		<BuildToolsDir>$(BaseDir)\build\tools</BuildToolsDir>
+		<Configuration>Release</Configuration>
+		<Platform>Any CPU</Platform>
+		<MSBuildProperties>Configuration=$(Configuration);Platform=$(Platform)</MSBuildProperties>
+	</PropertyGroup>
+	
+	<UsingTask 
+		AssemblyFile="$(BuildToolsDir)\xunit.runner.msbuild.dll" 
+		TaskName="Xunit.Runner.MSBuild.xunit" />
+	
+	<ItemGroup>    
+		<SolutionFile Include="$(BaseDir)\Neo4jClient.Migrations.sln" />					
+	</ItemGroup>
+	
+	<Target Name="Clean">
+		<MSBuild 	
+			Projects="@(SolutionFile)" 
+			Targets="Clean" 
+			Properties="$(MSBuildProperties)" />		
+		<RemoveDir 
+			Directories="$(BuildDir)" 
+			ContinueOnError="True" />
+	</Target>  
+
+	<Target Name="Build">
+		<MSBuild 
+			Projects="@(SolutionFile)" 
+			Properties="$(MSBuildProperties)">
+		</MSBuild>	
+		<ItemGroup>
+			<TestAssemblies Include="$(BaseDir)\**\bin\\$(Configuration)\*Tests.dll" />
+		</ItemGroup>
+	</Target>		
+
+    <Target Name="Rebuild">
+		<CallTarget Targets="Clean; Build; Test" />		
+	</Target>		
+
+	<Target Name="Test" DependsOnTargets="Build">
+		<xunit Assembly="$(BaseDir)\**\bin\$(Configuration)\*Tests.dll" />
+	</Target>
+	
+</Project>
